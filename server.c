@@ -6,7 +6,7 @@
 /*   By: njooris <njooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:06:39 by njooris           #+#    #+#             */
-/*   Updated: 2025/02/13 14:23:00 by njooris          ###   ########.fr       */
+/*   Updated: 2025/02/13 17:41:55 by njooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ void	signal_handler(int sig)
 	static int	pid;
 
 	if (count < 32)
-		pid = len_manage(sig, &count);
-	else if (count < 64)
 		len = len_manage(sig, &count);
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: njooris <njooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:06:34 by njooris           #+#    #+#             */
-/*   Updated: 2025/02/13 14:22:54 by njooris          ###   ########.fr       */
+/*   Updated: 2025/02/13 14:57:04 by njooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,6 @@ void	push_char_signal(char c, int pid_serv)
 	while (i >= 0)
 	{
 		if ((c >> i) & 1)
-			kill(pid_serv, SIGUSR1);
-		else
-			kill(pid_serv, SIGUSR2);
-		usleep(500);
-		i--;
-	}
-}
-
-void	push_pid(int pid_serv)
-{
-	int	i;
-	int	pid;
-
-	i = 31;
-	pid = getpid();
-	while (i >= 0)
-	{
-		if ((pid >> i) & 1)
 			kill(pid_serv, SIGUSR1);
 		else
 			kill(pid_serv, SIGUSR2);
@@ -76,8 +58,6 @@ void	brows_str_signal(char *str, int pid_serv)
 	int	i;
 
 	i = 0;
-	push_pid(pid_serv);
-	usleep(500);
 	push_len_signal(str, pid_serv);
 	usleep(500);
 	while (str[i])
@@ -91,6 +71,7 @@ void	signal_handler(int sig)
 {
 	(void)sig;
 	check = 1;
+	printf("Signal recu !\n");
 }
 
 int	main(int argc, char **argv)
@@ -105,6 +86,5 @@ int	main(int argc, char **argv)
 	brows_str_signal(argv[2], pid_serv);
 	while (!check)
 		pause();
-	printf("signal recu !\n");
 	return (0);
 }
