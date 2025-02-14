@@ -6,7 +6,7 @@
 /*   By: njooris <njooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:06:39 by njooris           #+#    #+#             */
-/*   Updated: 2025/02/13 17:41:55 by njooris          ###   ########.fr       */
+/*   Updated: 2025/02/13 17:43:45 by njooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,23 +63,12 @@ int	len_manage(int sig, int *count)
 	return (len);
 }
 
-void	reset_values(int *count, int *count_char, char **str, int *pid)
-{
-		*count = 0;
-		*count_char = 0;
-		free(*str);
-		*str = NULL;
-		kill(*pid, SIGUSR1);
-		*pid = 0;
-}
-
 void	signal_handler(int sig)
 {
 	static int	count;
 	static int	count_char;
 	static char	*str;
 	static int	len;
-	static int	pid;
 
 	if (count < 32)
 		len = len_manage(sig, &count);
@@ -96,7 +85,10 @@ void	signal_handler(int sig)
 	if (count_char == len && str)
 	{
 		printf("%s\n", str);
-		reset_values(&count, &count_char, &str, &pid);
+		count = 0;
+		count_char = 0;
+		free(str);
+		str = NULL;
 	}
 }
 
