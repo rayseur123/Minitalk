@@ -12,19 +12,19 @@ DEPS_client := $(addprefix $(UTILS)/,$(SRCS_client:.c=.d))
 DEPS_server := $(addprefix $(UTILS)/,$(SRCS_server:.c=.d))
 
 LIBS := -Llibft/ -lft
-PATH_LIBS := libft/
-INCLUDE_DIRS := -I libft/include
+PATH_LIBS := libft/libft.a
+INCLUDE_DIRS := -Ilibft/include
 
 CC = cc
-CPPFLAGS := -MMD -MP -g3 $(INCLUDE_DIRS)
-CFLAGS := -Wall -Wextra -Werror
+CPPFLAGS += -MMD -MP -g3 $(INCLUDE_DIRS)
+CFLAGS += -Wall -Wextra -Werror
 
 all: $(NAME)
 
-client: $(OBJS_client) $(LIBS)
+client: $(OBJS_client) $(PATH_LIBS)
 	$(CC) $^ -o $@
 
-server: $(OBJS_server) $(LIBS)
+server: $(OBJS_server) $(PATH_LIBS)
 	$(CC) $^ -o $@
 
 $(UTILS)/%.o: %.c | $(UTILS)
@@ -33,20 +33,17 @@ $(UTILS)/%.o: %.c | $(UTILS)
 $(UTILS):
 	@mkdir -p $(UTILS)
 
-$(LIBS):
-	$(MAKE) -C $(PATH_LIBS)
+$(PATH_LIBS):
+	$(MAKE) -C $(dir $(PATH_LIBS))
 
 -include $(DEPS_client) $(DEPS_server)
 
-bonus: $(OBJS_B) $(LIBS)
-	$(CC) $^ -o checker
-
 clean:
-	$(MAKE) clean -C lib/libft/
+	$(MAKE) clean -C libft/
 	rm -f $(OBJS_client) $(OBJS_server) $(DEPS_client) $(DEPS_server)
 
 fclean: clean
-	$(MAKE) fclean -C lib/libft/
+	$(MAKE) fclean -C libft/
 	rm -f $(NAME)
 
 re: fclean all

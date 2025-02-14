@@ -6,7 +6,7 @@
 /*   By: njooris <njooris@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 14:06:34 by njooris           #+#    #+#             */
-/*   Updated: 2025/02/14 11:01:06 by njooris          ###   ########.fr       */
+/*   Updated: 2025/02/14 12:14:11 by njooris          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,5 @@ int	main(int argc, char **argv)
 		return (0);
 	pid_serv = ft_atoi(argv[1]);
 	brows_str_signal(argv[2], pid_serv);
-	printf("Signal envoye !");
 	return (0);
 }
